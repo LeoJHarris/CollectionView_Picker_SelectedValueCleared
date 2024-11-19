@@ -3,13 +3,15 @@
     x:Class="CollectionView_Picker_SelectedValueCleared.MainPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:local="clr-namespace:CollectionView_Picker_SelectedValueCleared">
+    xmlns:local="clr-namespace:CollectionView_Picker_SelectedValueCleared"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:viewmodel1="clr-namespace:CollectionView_Picker_SelectedValueCleared.Models.ViewModels">
     <ContentPage.BindingContext>
         <local:MainPageViewModel />
     </ContentPage.BindingContext>
-    <CollectionView ItemsSource="{Binding Items}">
+    <CollectionView ItemsSource="{Binding RandomItemViewModels}">
         <CollectionView.ItemTemplate>
-            <DataTemplate>
+            <DataTemplate x:DataType="viewmodel1:RandomItemViewModel">
                 <Grid Padding="10">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
@@ -17,19 +19,14 @@
                     </Grid.RowDefinitions>
                     <Label
                         FontSize="Large"
-                        Text="{Binding}" />
+                        Text="{Binding Name}" />
                     <Picker
                         Title="Select an item"
                         Grid.Row="1"
-                        TextColor="Black">
-                        <Picker.ItemsSource>
-                            <x:Array Type="{x:Type x:String}">
-                                <x:String>Item 1</x:String>
-                                <x:String>Item 2</x:String>
-                                <x:String>Item 3</x:String>
-                            </x:Array>
-                        </Picker.ItemsSource>
-                    </Picker>
+                        ItemDisplayBinding="{Binding Name}"
+                        ItemsSource="{Binding PickerItems}"
+                        SelectedIndex="{Binding SelectedPickerIndex}"
+                        TextColor="Black" />
                 </Grid>
             </DataTemplate>
         </CollectionView.ItemTemplate>
